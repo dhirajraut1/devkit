@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevKit - Essential Developer Tools</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect x="4" y="4" width="24" height="24" rx="6" fill="url(#gradient)" />
+                        <path d="M12 10L20 16L12 22V10Z" fill="white" />
+                        <defs>
+                            <linearGradient id="gradient" x1="4" y1="4" x2="28" y2="28">
+                                <stop offset="0%" style="stop-color:#6366f1"/>
+                                <stop offset="100%" style="stop-color:#a855f7"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span>DevKit</span>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <div class="nav-section">
+                    <div class="nav-section-title">Text Tools</div>
+                    <button class="nav-item active" data-tool="character-counter">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 7h16M4 12h16M4 17h10"/>
+                        </svg>
+                        Character Counter
+                    </button>
+                    <button class="nav-item" data-tool="text-diff">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+                        </svg>
+                        Diff Checker
+                    </button>
+                    <button class="nav-item" data-tool="case-converter">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                        </svg>
+                        Case Converter
+                    </button>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Code Tools</div>
+                    <button class="nav-item" data-tool="json-formatter">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>
+                        </svg>
+                        JSON Formatter
+                    </button>
+                    <button class="nav-item" data-tool="markdown-preview">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                        Markdown Preview
+                    </button>
+                    <button class="nav-item" data-tool="base64-encoder">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+                        </svg>
+                        Base64 Encoder
+                    </button>
+                    <button class="nav-item" data-tool="bcrypt-hasher">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0110 0v4"/>
+                        </svg>
+                        Bcrypt Hasher
+                    </button>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Utilities</div>
+                    <button class="nav-item" data-tool="color-picker">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/>
+                        </svg>
+                        Color Picker
+                    </button>
+                    <button class="nav-item" data-tool="uuid-generator">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2"/>
+                            <path d="M9 9h.01M15 9h.01M9 15h.01M15 15h.01"/>
+                        </svg>
+                        UUID Generator
+                    </button>
+                    <button class="nav-item" data-tool="timestamp-converter">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                        Timestamp Converter
+                    </button>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <div class="content-wrapper">
+                <!-- Character Counter Tool -->
+                <div class="tool-container active" id="character-counter">
+                    <div class="tool-header">
+                        <h1>Character Counter</h1>
+                        <p class="tool-description">Count characters, words, lines, and more in real-time</p>
+                    </div>
+                    <div class="tool-body">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-label">Characters</div>
+                                <div class="stat-value" id="char-count">0</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Words</div>
+                                <div class="stat-value" id="word-count">0</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Lines</div>
+                                <div class="stat-value" id="line-count">0</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Paragraphs</div>
+                                <div class="stat-value" id="para-count">0</div>
+                            </div>
+                        </div>
+                        <div class="editor-section">
+                            <textarea id="char-input" placeholder="Start typing or paste your text here..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text Diff Tool -->
+                <div class="tool-container" id="text-diff">
+                    <div class="tool-header">
+                        <h1>Diff Checker</h1>
+                        <p class="tool-description">Compare two text inputs and see the differences</p>
+                    </div>
+                    <div class="tool-body">
+                        <div class="diff-container">
+                            <div class="diff-input-section">
+                                <label>Original Text</label>
+                                <textarea id="diff-original" placeholder="Enter original text..."></textarea>
+                            </div>
+                            <div class="diff-input-section">
+                                <label>Modified Text</label>
+                                <textarea id="diff-modified" placeholder="Enter modified text..."></textarea>
+                            </div>
+                        </div>
+                        <div class="action-bar">
+                            <button class="btn-primary" onclick="tools.diff.compare()">Compare</button>
+                            <button class="btn-secondary" onclick="tools.diff.clear()">Clear</button>
+                        </div>
+                        <div id="diff-result" class="diff-result"></div>
+                    </div>
+                </div>
+
+                <!-- Case Converter Tool -->
+                <div class="tool-container" id="case-converter">
+                    <div class="tool-header">
+                        <h1>Case Converter</h1>
+                        <p class="tool-description">Convert text between different cases</p>
+                    </div>
+                    <div class="tool-body">
+                        <div class="editor-section">
+                            <textarea id="case-input" placeholder="Enter text to convert..."></textarea>
+                        </div>
+                        <div class="button-grid">
+                            <button class="btn-case" onclick="tools.caseConverter.convert('upper')">UPPERCASE</button>
+                            <button class="btn-case" onclick="tools.caseConverter.convert('lower')">lowercase</button>
+                            <button class="btn-case" onclick="tools.caseConverter.convert('title')">Title Case</button>
+                            <button class="btn-case" onclick="tools.caseConverter.convert('sentence')">Sentence case</button>
+                            <button class="btn-case" onclick="tools.caseConverter.convert('camel')">camelCase</button>
+                            <button class="btn-case" onclick="tools.caseConverter.convert('snake')">snake_case</button>
+                            <button class="btn-case" onclick="tools.caseConverter.convert('kebab')">kebab-case</button>
+                            <button class="btn-case" onclick="tools.caseConverter.convert('pascal')">PascalCase</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- JSON Formatter Tool -->
+                <div class="tool-container" id="json-formatter">
+                    <div class="tool-header">
+                        <h1>JSON Formatter</h1>
+                        <p class="tool-description">Format, validate, and minify JSON data</p>
+                    </div>
+                    <div class="tool-body">
+                        <div class="split-view">
+                            <div class="split-panel">
+                                <div class="panel-header">
+                                    <span>Input</span>
+                                    <button class="btn-icon" onclick="tools.json.clear()" title="Clear">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <textarea id="json-input" placeholder='{"example": "Enter JSON here..."}'></textarea>
+                            </div>
+                            <div class="split-panel">
+                                <div class="panel-header">
+                                    <span>Output</span>
+                                    <button class="btn-icon" onclick="tools.json.copy()" title="Copy">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <pre id="json-output"></pre>
+                            </div>
+                        </div>
+                        <div class="action-bar">
+                            <button class="btn-primary" onclick="tools.json.format()">Format</button>
+                            <button class="btn-secondary" onclick="tools.json.minify()">Minify</button>
+                            <button class="btn-secondary" onclick="tools.json.validate()">Validate</button>
+                        </div>
+                        <div id="json-status" class="status-message"></div>
+                    </div>
+                </div>
+
+                <!-- Markdown Preview Tool -->
+                <div class="tool-container" id="markdown-preview">
+                    <div class="tool-header">
+                        <h1>Markdown Preview</h1>
+                        <p class="tool-description">Write markdown and preview the rendered output</p>
+                    </div>
+                    <div class="tool-body">
+                        <div class="split-view">
+                            <div class="split-panel">
+                                <div class="panel-header">
+                                    <span>Markdown</span>
+                                </div>
+                                <textarea id="markdown-input" placeholder="# Enter Markdown here..."></textarea>
+                            </div>
+                            <div class="split-panel">
+                                <div class="panel-header">
+                                    <span>Preview</span>
+                                </div>
+                                <div id="markdown-output" class="markdown-preview"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Base64 Encoder Tool -->
+                <div class="tool-container" id="base64-encoder">
+                    <div class="tool-header">
+                        <h1>Base64 Encoder/Decoder</h1>
+                        <p class="tool-description">Encode and decode Base64 strings</p>
+                    </div>
+                    <div class="tool-body">
+                        <div class="editor-section">
+                            <label>Input</label>
+                            <textarea id="base64-input" placeholder="Enter text or Base64 string..."></textarea>
+                        </div>
+                        <div class="action-bar">
+                            <button class="btn-primary" onclick="tools.base64.encode()">Encode</button>
+                            <button class="btn-secondary" onclick="tools.base64.decode()">Decode</button>
+                            <button class="btn-secondary" onclick="tools.base64.clear()">Clear</button>
+                        </div>
+                        <div class="editor-section">
+                            <label>Output</label>
+                            <textarea id="base64-output" readonly placeholder="Result will appear here..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Color Picker Tool -->
+                <div class="tool-container" id="color-picker">
+                    <div class="tool-header">
+                        <h1>Color Picker</h1>
+                        <p class="tool-description">Pick colors and convert between formats</p>
+                    </div>
+                    <div class="tool-body">
+                        <div class="color-picker-container">
+                            <div class="color-display" id="color-display"></div>
+                            <div class="color-input-group">
+                                <input type="color" id="color-input" value="#6366f1">
+                                <input type="text" id="hex-input" value="#6366f1" placeholder="HEX">
+                            </div>
+                            <div class="color-formats">
+                                <div class="format-group">
+                                    <label>RGB</label>
+                                    <input type="text" id="rgb-output" readonly>
+                                </div>
+                                <div class="format-group">
+                                    <label>HSL</label>
+                                    <input type="text" id="hsl-output" readonly>
+                                </div>
+                                <div class="format-group">
+                                    <label>CMYK</label>
+                                    <input type="text" id="cmyk-output" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- UUID Generator Tool -->
+                <div class="tool-container" id="uuid-generator">
+                    <div class="tool-header">
+                        <h1>UUID Generator</h1>
+                        <p class="tool-description">Generate random UUIDs (Version 4)</p>
+                    </div>
+                    <div class="tool-body">
+                        <div class="uuid-display">
+                            <div class="uuid-value" id="uuid-value">Click generate to create a UUID</div>
+                            <button class="btn-icon" onclick="tools.uuid.copy()" title="Copy">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                    <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="action-bar">
+                            <button class="btn-primary" onclick="tools.uuid.generate()">Generate UUID</button>
+                            <button class="btn-secondary" onclick="tools.uuid.generateMultiple()">Generate 10 UUIDs</button>
+                        </div>
+                        <div id="uuid-list" class="uuid-list"></div>
+                    </div>
+                </div>
+
+                <!-- Timestamp Converter Tool -->
+                <div class="tool-container" id="timestamp-converter">
+                    <div class="tool-header">
+                        <h1>Timestamp Converter</h1>
+                        <p class="tool-description">Convert between Unix timestamps and human-readable dates</p>
+                    </div>
+                    <div class="tool-body">
+                        <div class="current-time-display">
+                            <div class="current-label">Current Time</div>
+                            <div class="current-value" id="current-timestamp">0</div>
+                            <div class="current-date" id="current-date"></div>
+                        </div>
+                        <div class="converter-section">
+                            <div class="input-group">
+                                <label>Unix Timestamp (seconds)</label>
+                                <input type="number" id="timestamp-input" placeholder="e.g., 1638360000">
+                                <button class="btn-primary" onclick="tools.timestamp.convertTimestamp()">Convert</button>
+                            </div>
+                            <div class="input-group">
+                                <label>Date & Time</label>
+                                <input type="datetime-local" id="datetime-input">
+                                <button class="btn-primary" onclick="tools.timestamp.convertDate()">Convert</button>
+                            </div>
+                        </div>
+                        <div id="timestamp-result" class="result-display"></div>
+                    </div>
+                </div>
+
+                <!-- Bcrypt Hasher Tool -->
+                <div class="tool-container" id="bcrypt-hasher">
+                    <div class="tool-header">
+                        <h1>Bcrypt Hasher</h1>
+                        <p class="tool-description">Generate and verify bcrypt password hashes</p>
+                    </div>
+                    <div class="tool-body">
+                        <div class="bcrypt-section">
+                            <div class="input-group">
+                                <label>Password to Hash</label>
+                                <input type="password" id="bcrypt-password" placeholder="Enter password...">
+                                <div class="bcrypt-controls">
+                                    <div class="rounds-control">
+                                        <label>Rounds (4-12)</label>
+                                        <input type="number" id="bcrypt-rounds" value="10" min="4" max="12">
+                                    </div>
+                                    <button class="btn-primary" onclick="tools.bcrypt.hash()">Generate Hash</button>
+                                </div>
+                            </div>
+                            
+                            <div class="hash-output">
+                                <label>Generated Hash</label>
+                                <div class="hash-display">
+                                    <textarea id="bcrypt-hash" readonly placeholder="Hash will appear here..."></textarea>
+                                    <button class="btn-icon" onclick="tools.bcrypt.copyHash()" title="Copy Hash">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="divider">
+                            <span>Verify Hash</span>
+                        </div>
+
+                        <div class="bcrypt-section">
+                            <div class="verify-inputs">
+                                <div class="input-group">
+                                    <label>Password</label>
+                                    <input type="password" id="verify-password" placeholder="Enter password to verify...">
+                                </div>
+                                <div class="input-group">
+                                    <label>Hash</label>
+                                    <textarea id="verify-hash" placeholder="Enter bcrypt hash..." rows="3"></textarea>
+                                </div>
+                            </div>
+                            <button class="btn-secondary" onclick="tools.bcrypt.verify()">Verify Password</button>
+                            <div id="verify-result" class="verify-result"></div>
+                        </div>
+
+                        <div class="bcrypt-info">
+                            <h4>About Bcrypt</h4>
+                            <p>Bcrypt is a password hashing function designed to be slow and computationally expensive, making it resistant to brute-force attacks. The "rounds" parameter determines how many times the hash function is applied - higher values are more secure but slower.</p>
+                            <p><strong>Recommended rounds:</strong> 10-12 for most applications</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
