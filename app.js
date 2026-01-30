@@ -579,6 +579,236 @@ const bcryptHasher = {
     }
 };
 
+// Lorem Ipsum Generator Tool
+const loremIpsumGenerator = {
+    loremWords: [
+        'lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit',
+        'sed', 'do', 'eiusmod', 'tempor', 'incididunt', 'ut', 'labore', 'et', 'dolore',
+        'magna', 'aliqua', 'enim', 'ad', 'minim', 'veniam', 'quis', 'nostrud',
+        'exercitation', 'ullamco', 'laboris', 'nisi', 'aliquip', 'ex', 'ea', 'commodo',
+        'consequat', 'duis', 'aute', 'irure', 'in', 'reprehenderit', 'voluptate',
+        'velit', 'esse', 'cillum', 'fugiat', 'nulla', 'pariatur', 'excepteur', 'sint',
+        'occaecat', 'cupidatat', 'non', 'proident', 'sunt', 'culpa', 'qui', 'officia',
+        'deserunt', 'mollit', 'anim', 'id', 'est', 'laborum', 'semper', 'quis', 'lectus',
+        'nulla', 'at', 'volutpat', 'diam', 'maecenas', 'ultricies', 'mi', 'eget',
+        'mauris', 'pharetra', 'magna', 'ac', 'placerat', 'vestibulum', 'lectus',
+        'mauris', 'ultrices', 'eros', 'integer', 'vitae', 'justo', 'eget', 'arcu',
+        'dictum', 'varius', 'duis', 'convallis', 'tellus', 'elementum', 'sagittis'
+    ],
+    
+    generate() {
+        const type = document.getElementById('lorem-type').value;
+        const count = parseInt(document.getElementById('lorem-count').value);
+        const startWithLorem = document.getElementById('lorem-start-with').checked;
+        const output = document.getElementById('lorem-output');
+        
+        let result = '';
+        
+        switch(type) {
+            case 'paragraphs':
+                result = this.generateParagraphs(count, startWithLorem);
+                break;
+            case 'sentences':
+                result = this.generateSentences(count, startWithLorem);
+                break;
+            case 'words':
+                result = this.generateWords(count, startWithLorem);
+                break;
+        }
+        
+        output.value = result;
+    },
+    
+    generateWords(count, startWithLorem) {
+        let words = [];
+        
+        if (startWithLorem) {
+            words.push('Lorem', 'ipsum', 'dolor', 'sit', 'amet');
+            count -= 5;
+        }
+        
+        for (let i = 0; i < count; i++) {
+            words.push(this.getRandomWord());
+        }
+        
+        return words.join(' ') + '.';
+    },
+    
+    generateSentences(count, startWithLorem) {
+        let sentences = [];
+        
+        if (startWithLorem) {
+            sentences.push('Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
+            count -= 1;
+        }
+        
+        for (let i = 0; i < count; i++) {
+            const wordCount = Math.floor(Math.random() * 10) + 5;
+            let sentence = [];
+            
+            for (let j = 0; j < wordCount; j++) {
+                sentence.push(this.getRandomWord());
+            }
+            
+            sentence[0] = sentence[0].charAt(0).toUpperCase() + sentence[0].slice(1);
+            sentences.push(sentence.join(' ') + '.');
+        }
+        
+        return sentences.join(' ');
+    },
+    
+    generateParagraphs(count, startWithLorem) {
+        let paragraphs = [];
+        
+        if (startWithLorem) {
+            paragraphs.push('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.');
+            count -= 1;
+        }
+        
+        for (let i = 0; i < count; i++) {
+            const sentenceCount = Math.floor(Math.random() * 4) + 3;
+            let paragraph = [];
+            
+            for (let j = 0; j < sentenceCount; j++) {
+                const wordCount = Math.floor(Math.random() * 12) + 6;
+                let sentence = [];
+                
+                for (let k = 0; k < wordCount; k++) {
+                    sentence.push(this.getRandomWord());
+                }
+                
+                sentence[0] = sentence[0].charAt(0).toUpperCase() + sentence[0].slice(1);
+                paragraph.push(sentence.join(' ') + '.');
+            }
+            
+            paragraphs.push(paragraph.join(' '));
+        }
+        
+        return paragraphs.join('\n\n');
+    },
+    
+    getRandomWord() {
+        return this.loremWords[Math.floor(Math.random() * this.loremWords.length)];
+    },
+    
+    copy() {
+        const output = document.getElementById('lorem-output').value;
+        if (output) {
+            navigator.clipboard.writeText(output).then(() => {
+                this.showMessage('Copied to clipboard!', 'success');
+            });
+        }
+    },
+    
+    clear() {
+        document.getElementById('lorem-output').value = '';
+    },
+    
+    showMessage(message, type) {
+        const notification = document.createElement('div');
+        notification.className = `status-message ${type}`;
+        notification.textContent = message;
+        notification.style.position = 'fixed';
+        notification.style.top = '20px';
+        notification.style.right = '20px';
+        notification.style.zIndex = '1000';
+        notification.style.minWidth = '300px';
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    }
+};
+
+// QR Code Generator Tool
+const qrGenerator = {
+    currentQR: null,
+    
+    generate() {
+        const input = document.getElementById('qr-input').value;
+        const size = parseInt(document.getElementById('qr-size').value);
+        const errorLevel = document.getElementById('qr-error').value;
+        const container = document.getElementById('qr-canvas-container');
+        
+        if (!input.trim()) {
+            this.showMessage('Please enter content to generate QR code', 'error');
+            return;
+        }
+        
+        // Clear previous QR code
+        container.innerHTML = '';
+        
+        try {
+            // Create QR code
+            this.currentQR = new QRCode(container, {
+                text: input,
+                width: size,
+                height: size,
+                colorDark: '#000000',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel[errorLevel]
+            });
+            
+            this.showMessage('QR code generated successfully!', 'success');
+        } catch (error) {
+            this.showMessage('Error generating QR code: ' + error.message, 'error');
+        }
+    },
+    
+    download() {
+        const container = document.getElementById('qr-canvas-container');
+        const canvas = container.querySelector('canvas');
+        
+        if (!canvas) {
+            this.showMessage('Please generate a QR code first', 'error');
+            return;
+        }
+        
+        try {
+            // Convert canvas to blob and download
+            canvas.toBlob((blob) => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'qrcode.png';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                this.showMessage('QR code downloaded!', 'success');
+            });
+        } catch (error) {
+            this.showMessage('Error downloading QR code: ' + error.message, 'error');
+        }
+    },
+    
+    clear() {
+        document.getElementById('qr-input').value = '';
+        document.getElementById('qr-canvas-container').innerHTML = '';
+        this.currentQR = null;
+    },
+    
+    showMessage(message, type) {
+        const notification = document.createElement('div');
+        notification.className = `status-message ${type}`;
+        notification.textContent = message;
+        notification.style.position = 'fixed';
+        notification.style.top = '20px';
+        notification.style.right = '20px';
+        notification.style.zIndex = '1000';
+        notification.style.minWidth = '300px';
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    }
+};
+
 // Global tools object for onclick handlers
 const tools = {
     diff: diffChecker,
@@ -587,7 +817,9 @@ const tools = {
     base64: base64Tool,
     uuid: uuidGenerator,
     timestamp: timestampConverter,
-    bcrypt: bcryptHasher
+    bcrypt: bcryptHasher,
+    lorem: loremIpsumGenerator,
+    qr: qrGenerator
 };
 
 // Initialize all tools
